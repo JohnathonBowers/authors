@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import AuthorDeleteButton from './AuthorDeleteButton';
 
 const AuthorList = () => {
     
@@ -13,6 +14,10 @@ const AuthorList = () => {
             .then(res => setAuthors(res.data))
             .catch(err => console.log(err))
     }, [])
+
+    const removeFromDom = authorId => {
+        setAuthors(authors.filter(author => author._id !== authorId))
+    }
 
     return (
         <div className="container col-sm-6 mt-4 pt-4">
@@ -35,7 +40,7 @@ const AuthorList = () => {
                                     {/* Add edit and delete buttons */}
                                     <td>
                                         <button className="btn btn-warning me-2" onClick={e => navigate(`/edit/${author._id}`)}>Edit</button> 
-                                        Delete
+                                        <AuthorDeleteButton authorId={author._id} successCallback={() => removeFromDom(author._id)} />
                                     </td>
                                 </tr>
                             )
