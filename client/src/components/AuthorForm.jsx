@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 
 const AuthorForm = (props) => {
     
-    const { initialAuthorData, onSubmitProp } = props
+    const { initialAuthorData, onSubmitProp, errors } = props
     
     const [author, setAuthor] = useState(initialAuthorData)
 
@@ -25,7 +25,14 @@ const AuthorForm = (props) => {
     return (
         <div className="border border-dark">
             <form className="m-4" onSubmit={handleSubmit}>
-                <label htmlFor="authorName" className="form-label mb-2">Name:</label>
+                <div className="d-flex flex-row">
+                    <label htmlFor="authorName" className="form-label mb-2 me-4">Name:</label>
+                    {
+                        errors && errors.authorName ?
+                        <p className="text-danger ms-4 mb-2">{errors.authorName.message}</p> :
+                        ""
+                    }
+                </div>
                 <input type="text" name="authorName" className="form-control mb-4" value={author.authorName} onChange={handleChange} />
                 <div className="d-flex flex-row justify-content-center">
                     <button className="me-4 btn btn-danger" onClick={handleCancelButton}>Cancel</button>

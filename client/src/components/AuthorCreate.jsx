@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import axios from 'axios'
 import AuthorForm from './AuthorForm'
@@ -9,6 +9,8 @@ const AuthorCreate = () => {
         authorName: ""
     }
     
+    const [errors, setErrors] = useState()
+
     const navigate = useNavigate()
 
     const createAuthor = authorParam => {
@@ -18,7 +20,9 @@ const AuthorCreate = () => {
                 console.log(res.data)
                 navigate("/")
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                setErrors(err.response.data.errors)
+            })
     }
     
     return (
@@ -26,7 +30,7 @@ const AuthorCreate = () => {
             <h1 className="mb-4">Favorite Authors</h1>
             <Link to="/" className="my-4">Home</Link>
             <p className="my-4">Add a new author:</p>
-            <AuthorForm initialAuthorData={initialAuthorData} onSubmitProp={createAuthor} />
+            <AuthorForm initialAuthorData={initialAuthorData} onSubmitProp={createAuthor} errors={errors} />
         </div>
     )
 }

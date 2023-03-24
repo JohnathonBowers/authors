@@ -9,6 +9,8 @@ const AuthorUpdate = () => {
 
     const [author, setAuthor] = useState({})
 
+    const [errors, setErrors] = useState()
+
     const [loaded, setLoaded] = useState(false)
 
     const navigate = useNavigate()
@@ -29,7 +31,9 @@ const AuthorUpdate = () => {
                 console.log(res.data)
                 navigate("/")
             })
-            .catch(err => console.log(err))
+            .catch(err => {
+                setErrors(err.response.data.errors)
+            })
     }
 
     return (
@@ -38,7 +42,7 @@ const AuthorUpdate = () => {
             <Link to="/" className="my-4">Home</Link>
             <p className="my-4">Edit this author:</p>
             {
-                loaded && <AuthorForm initialAuthorData={author} onSubmitProp={updateAuthor} />
+                loaded && <AuthorForm initialAuthorData={author} onSubmitProp={updateAuthor} errors={errors} />
             }
         </div>
     )

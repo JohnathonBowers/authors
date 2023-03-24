@@ -37,7 +37,6 @@ const AuthorList = () => {
                             return (
                                 <tr key={index}>
                                     <td>{author.authorName}</td>
-                                    {/* Add edit and delete buttons */}
                                     <td>
                                         <button className="btn btn-warning me-2" onClick={e => navigate(`/edit/${author._id}`)}>Edit</button> 
                                         <AuthorDeleteButton authorId={author._id} successCallback={() => removeFromDom(author._id)} />
